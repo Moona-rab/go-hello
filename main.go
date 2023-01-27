@@ -9,10 +9,11 @@ import (
 )
 
 // Enter width, length of wall, calculate area
-// Add another wall y/n? while y (loop), else sum all walls
+// Add another wall y/n?  if y, loop, else sum all walls
+// enter no. doors
+// enter no. of coats
 // enter efficiency of paint per litre
-// area/efficiency = total litres of paint
-// Functionise!
+// (area/efficiency - doors area) * coats = total litres of paint
 
 func length(scanner *bufio.Scanner) string {
 
@@ -36,7 +37,30 @@ func walls(scanner *bufio.Scanner) string {
 	scanner.Scan()
 	walls_Str := scanner.Text()
 	return walls_Str
+}
 
+func doors(scanner *bufio.Scanner) string {
+
+	fmt.Print("\nPlease enter the number of doors: ")
+	scanner.Scan()
+	doors_Str := scanner.Text()
+	return doors_Str
+}
+
+func coats(scanner *bufio.Scanner) string {
+
+	fmt.Println("\nHow many coats of paint will you apply? ")
+	scanner.Scan()
+	coats_Str := scanner.Text()
+	return coats_Str
+}
+
+func efficacy(scanner *bufio.Scanner) string {
+
+	fmt.Println("\nEnter the efficacy of your paint in metres-squared per litre: ")
+	scanner.Scan()
+	efficacy_Str := scanner.Text()
+	return efficacy_Str
 }
 
 func main() {
@@ -89,16 +113,38 @@ func main() {
 				n += total
 			}
 
-			fmt.Printf("\nThe total surface area for paint is %.2f square-metres.", n)
+			fmt.Printf("\nThe total surface area for paint is %.2f square-metres.\n", n)
 
 		} else {
 			fmt.Println("This is not a valid input")
 			return
 		}
 
-		fmt.Println("\n\nEnter the efficacy of your paint in metres-squared per litre: ")
-		scanner.Scan()
-		efficacy_Str := scanner.Text()
+		doors_Str := doors(scanner)
+
+		user_doors, err := strconv.ParseFloat(doors_Str, 64)
+
+		if err != nil {
+			fmt.Printf("'%s' is not a number.", doors_Str)
+			return
+		} else {
+			fmt.Println(user_doors, "door(s)")
+		}
+
+		doors_area := user_doors * 2
+
+		coats_Str := coats(scanner)
+
+		user_coats, err := strconv.ParseFloat(coats_Str, 64)
+
+		if err != nil {
+			fmt.Printf("'%s' is not a number.", coats_Str)
+			return
+		} else {
+			fmt.Println(user_coats, "coats")
+		}
+
+		efficacy_Str := efficacy(scanner)
 
 		efficacy, err := strconv.ParseFloat(efficacy_Str, 64)
 
@@ -108,7 +154,7 @@ func main() {
 
 		} else {
 
-			paint_needed := n / efficacy
+			paint_needed := (n/efficacy - doors_area) * user_coats
 			fmt.Printf("\nYou will need %.2f litres of paint for %.2f square-metres of wall.", paint_needed, n)
 			fmt.Println("\n\nThank you for using THE HAPPY PAINT CALCULATOR today. Happy painting!")
 			break
@@ -117,5 +163,3 @@ func main() {
 	}
 
 }
-
-// hello
