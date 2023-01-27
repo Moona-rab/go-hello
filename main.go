@@ -63,6 +63,23 @@ func efficacy(scanner *bufio.Scanner) string {
 	return efficacy_Str
 }
 
+func smiley() {
+
+	fmt.Println(`
+
+      _.-'''''-._
+    .'  _     _  '.
+   /   (o)   (o)   \
+  |                 |
+  |  \           /  |
+   \  '._______.'   /
+    '.    '''     .'
+      '-._____.-'
+	
+	`)
+
+}
+
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -70,6 +87,7 @@ func main() {
 	n := 0.0
 
 	fmt.Println("\nWelcome to THE HAPPY PAINT CALCULATOR. We are here to help you with your paint project!")
+	smiley()
 
 	for {
 
@@ -157,6 +175,7 @@ func main() {
 			paint_needed := (n/efficacy - doors_area) * user_coats
 			fmt.Printf("\nYou will need %.2f litres of paint for %.2f square-metres of wall.", paint_needed, n)
 			fmt.Println("\n\nThank you for using THE HAPPY PAINT CALCULATOR today. Happy painting!")
+			smiley()
 			break
 		}
 
